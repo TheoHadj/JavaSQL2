@@ -81,6 +81,29 @@ public class dbTask {
 
         return tasks;
         }
+
+    public static void remove(Connection dbConnection, int id){
+        if (id == 0) { //petit tricks, java initialise les int a 0 quand ils n'ont pas de valeur
+            System.out.println("Erreur cette tâche n'est pas en bdd!");
+            return;
+        }
+
+        String sql = "DELETE FROM Task WHERE id = ?";
+
+        try (PreparedStatement statement = dbConnection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println("Tâche supprimée avec succès !");
+            } else {
+                System.out.println("Tâche introuvable.");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
     }
 
 
