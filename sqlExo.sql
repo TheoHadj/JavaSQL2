@@ -1,0 +1,32 @@
+CREATE DATABASE IF NOT EXISTS GestionTaches;
+
+USE GestionTaches;
+
+CREATE TABLE IF NOT EXISTS Account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(255) NOT NULL,
+    lastname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Category (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Task (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS TaskCategory (
+    task_id INT,
+    category_id INT,
+    PRIMARY KEY (task_id, category_id),
+    FOREIGN KEY (task_id) REFERENCES Task(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE
+);
