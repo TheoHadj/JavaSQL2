@@ -9,18 +9,20 @@ public class Task {
     private boolean status;
 //    private static ArrayList<Task> tasks;
     private ArrayList<Category> categories;
+    private Account account;
 
 
     Task(){
 
     }
 
-    Task(int id, String title, String description, Date createdAt, boolean status){
+    Task(int id, String title, String description, Date createdAt, boolean status, Account account) {
         setId(id);
         setTitle(title);
         setDescription(description);
         setCreatedAt(createdAt);
         setStatus(status);
+        setAccount(account);
         categories = new ArrayList<>();
     }
 
@@ -52,7 +54,7 @@ public class Task {
         this.createdAt = createdAt;
     }
 
-    public boolean getStatus() {
+    public boolean getStatusT() {
         return status;
     }
     private void setStatus(boolean status) {
@@ -79,11 +81,20 @@ public class Task {
         categories.add(category);
     }
 
+    public Account getAccount() {
+        return account;
+    }
+    private void setAccount(Account account) {
+        this.account = account;
+    }
+
+
 
     public void displayTask(){
+        System.out.println("Account: " + getAccount().getFirstname() + " " + getAccount().getLastname());
         System.out.println("Title: " + getTitle());
         System.out.println("Description: " + getDescription());
-        System.out.println("Status: " + getStatus());
+        System.out.println("Status: " + getStatusT());
         for(Category category : categories){
             System.out.println(category.getName());
         }

@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS Task (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status BOOLEAN NOT NULL
+    status BOOLEAN NOT NULL,
+    account_id INT NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS TaskCategory (
@@ -30,3 +32,4 @@ CREATE TABLE IF NOT EXISTS TaskCategory (
     FOREIGN KEY (task_id) REFERENCES Task(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE
 );
+

@@ -6,7 +6,8 @@ import java.util.List;
 public class dbTask {
 //REGROUPER getAll et getBy
     public static ArrayList<Task> getBy(String attr, String value, Connection connection) {
-        String sql = "SELECT t.id, t.title, t.description, t.createdAt, t.status, c.id, c.name FROM Task t LEFT " +
+        String sql = "SELECT t.id, t.title, t.description, t.createdAt, t.status, c.id, c.name, a.id, a.firstname, a.lastname, a.email, a.password FROM Task t " +
+                "LEFT JOIN Account a ON t.account_id = a.id LEFT " +
                 "JOIN TaskCategory tc ON t.id = tc.task_id " +
                 "LEFT JOIN Category c ON tc.category_id = c.id " +
                 "WHERE t." + attr +  " = ?";
@@ -18,7 +19,7 @@ public class dbTask {
 
     public static ArrayList<Task> getAll(Connection connection){
 
-        String sql = "SELECT t.id, t.title, t.description, t.createdAt, t.status, c.id, c.name FROM Task t LEFT JOIN TaskCategory tc ON t.id = tc.task_id LEFT JOIN Category c ON tc.category_id = c.id";
+        String sql = "SELECT t.id, t.title, t.description, t.createdAt, t.status, c.id, c.name, a.id, a.firstname, a.lastname, a.email, a.password FROM Task t LEFT JOIN Account a ON t.account_id = a.id LEFT JOIN TaskCategory tc ON t.id = tc.task_id LEFT JOIN Category c ON tc.category_id = c.id";
         ArrayList<Task> tasks = get(connection, sql, null);
         return tasks;
     }
@@ -55,7 +56,8 @@ public class dbTask {
                         description = resultSet.getString("t.description");
                         createdAt = resultSet.getDate("t.createdAt");
                         status = resultSet.getBoolean("t.status");
-                        task = new Task(id, title, description, createdAt, status);
+                        Account account = new Account(resultSet.getInt("a.id"),resultSet.getString("a.firstname"),resultSet.getString("a.lastname"),resultSet.getString("a.email"),resultSet.getString("a.password"));
+                        task = new Task(id, title, description, createdAt, status, account);
                         tasks.add(task);
                         actualIndex++;
                         alreadyParsedId.add(id);
