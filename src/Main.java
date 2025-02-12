@@ -18,6 +18,11 @@ public class Main {
             task.displayTask();
         }
 
+        ArrayList<Task> tasksBy = dbTask.getBy("title", "Finish report",db.getConnection());
+        for(Task task : tasksBy) {
+            task.displayTask();
+        }
+
 
 
 
